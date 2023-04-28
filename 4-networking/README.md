@@ -117,7 +117,7 @@ ingress-nginx-controller-b9fbd76f4-6dfh8   1/1     Running     0          46s
 Next, create an ingress configuration file and apply it to the cluster:
 
 ```yaml
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
  name: api
@@ -125,10 +125,13 @@ spec:
  rules:
    - http:
        paths:
-         - path: /
+         - pathType: Prefix
+           path: /
            backend:
-             serviceName: api
-             servicePort: 9090
+             service:
+               name: api
+               port:
+                 number: 9090
 ```
 
 ```bash
